@@ -21,6 +21,19 @@ CREATE TABLE IngredientsInRecipes (
 	FOREIGN KEY (ingredient_id) REFERENCES Ingredients(ingredient_id)
 )ENGINE=INNODB;
 
+/*
+CREATE TABLE Steps (
+	step_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	step_text TEXT NOT NULL
+)ENGINE=INNODB;
+
+CREATE TABLE StepsInRecipes (
+	step_id INT,
+	recipe_id INT,
+	step_number INT
+)ENGINE=INNODB;
+*/
+
 
 INSERT INTO Ingredients (name) VALUES 	('chicken'), ('broccoli'), ('pork'), ('peas'), ('black beans'), 
 					('spaghetti'), ('pesto'), ('ground beef'), ('milk'), ('cheddar cheese'),
@@ -37,6 +50,7 @@ SELECT i.name FROM Ingredients i;
 SELECT r.name FROM Recipes r;
 
 
+SELECT r.name FROM Recipes r WHERE r.name LIKE '%stir%fry%';
 /* find all ingredients for a single recipe 'stir fry' */
 SELECT r.name, i.name FROM Ingredients i, Recipes r, IngredientsInRecipes ir WHERE r.name = 'stir fry' AND r.recipe_id = ir.recipe_id AND i.ingredient_id = ir.ingredient_id;
 /* find all recipes with a single ingredient 'salt' */
