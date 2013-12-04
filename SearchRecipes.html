@@ -1,8 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SearchRecipes</title>
-
-</head><body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+function load_result_in_page() {
+	var search_value = document.getElementById("search_field").value;
+	$.ajax({
+		type: 'POST',
+		url: 'search_recipes.php',
+		data: 'search_field=' + search_value,
+		success: function(html){
+			if(html){
+				document.getElementById("results_field").innerHTML=html;
+			} else {
+				return;
+			}
+		}
+	}); 
+	return false;
+}
+</script>
+</head>
+<body>
 <div style="text-align: right;">
 	<form method="link" style="display:inline;" action="SearchRecipes.html">
 		<input type="submit" value="Search Recipes">
@@ -14,14 +33,17 @@
 		<input type="submit" value="Add Ingredient">
 	</form>
 </div>
-<h1 style="text-align: center;">Search Recipes</h1>
-<div style="text-align: center;">
-	<input name="search_field" value="Search">
-	<input value="Search" name="search_submit" type="submit">
-</div>
-<div style="text-align: center;">
-	<textarea cols="50" rows="20" name="search_results_area"></textarea>
-</div>
+
+<form action="search_recipes.php" method="POST">
+	<h1 style="text-align: center;">Search Recipes</h1>
+	<div style="text-align: center;">
+		<input type="text" name="search_field" id="search_field" value="Search" />
+		<input value="Search" name="search_submit" type="button" id="search_button" onclick="load_result_in_page()" />
+	</div>
+</form>
+
+<div id="results_field"></div>
+
 <div style="text-align: center;">
 	<form method="link" style="display:inline" action="CreateRecipe.html">
 		<input type="submit" value="Create Recipe">
@@ -30,4 +52,6 @@
 		<input type="submit" value="Add Ingredient">
 	</form>
 </div>
-</body></html>
+
+</body>
+</html>
