@@ -3,6 +3,9 @@
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SearchRecipes</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript">
+<!-- This javascript is required for loading the PHP results in the page, rather than on a new page. -->  
+<!-- Notice that the DOM object with id "search_button" is of type "button". -->
+<!-- This keeps the default loading from happening, so it won't load a new page. -->
 function load_result_in_page() {
 	var search_value = document.getElementById("search_field").value;
 	$.ajax({
