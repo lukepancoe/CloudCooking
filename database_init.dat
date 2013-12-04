@@ -24,8 +24,8 @@ CREATE TABLE IngredientsInRecipes (
 
 INSERT INTO Ingredients (name) VALUES 	('chicken'), ('broccoli'), ('pork'), ('peas'), ('black beans'), 
 					('spaghetti'), ('pesto'), ('ground beef'), ('milk'), ('cheddar cheese'),
-					('macaroni'), ('butter'), ('flower'), ('sugar'), ('salt'), ('bread'), ('eggs'),
-					('tomatoe sauce'), ('rice'), ('soy sauce');
+					('macaroni'), ('butter'), ('flour'), ('sugar'), ('salt'), ('bread'), ('eggs'),
+					('tomato sauce'), ('rice'), ('soy sauce');
 
 INSERT INTO Recipes (name) VALUES 	('stir fry'), ('spaghetti with meatballs'), ('pesto pasta'), ('mac and cheese');
 
