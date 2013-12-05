@@ -2,7 +2,6 @@
 	<body>
 		<?php 
 			$search_value = $_POST['search_field'];
-			/* echo '<p>Searched for: ' . $search_value . '</p>';*/
 			// connection params
 			$host = 'localhost';
 			$user = 'gsparks';
@@ -21,23 +20,26 @@
 			/* echo $sql_stmt; */
 			$result = mysql_query($sql_stmt);
 			$num_rows = mysql_num_rows($result);
-			
 		?>
 		
 		<!-- These divs center the resulting select display on the page -->
-		<div id="alignment" style="display:table; width:100%; text-align:center">
-			<div id="inner_alignment" style="display:table-cell; vertical-align:middle; height:80px;">
-				<select name="result_select" id="result_select" size="<?php echo $num_rows; ?>">
-				<?php
-					while($row = mysql_fetch_row($result)) {
-						list($name) = $row;
-						echo '<option>' . $name . '</option>';
-					}
-					mysql_close();
-				?>
-				</select>
+		<form action="view_recipe.php" method="POST">
+			<div id="alignment" style="display:table; width:100%; text-align:center">
+				<div id="inner_alignment" style="display:table-cell; vertical-align:middle; height:80px;">
+					<select name="result_select" id="result_select" size="<?php echo $num_rows; ?>">
+					<?php
+						while($row = mysql_fetch_row($result)) {
+							list($name) = $row;
+							echo '<option>' . $name . '</option>';
+						}
+						mysql_close();
+					?>
+					</select>
+				</div>
 			</div>
-		</div>
-
+			<div style="text-align: center;">
+				<input value="Show Recipe" name="show_recipe" type="submit" id="show_recipe" style="text-align: center; width=50px; position: absolute;" />
+			</div>
+		</form>
 	</body>
 </html>

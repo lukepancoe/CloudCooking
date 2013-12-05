@@ -10,7 +10,8 @@ CREATE TABLE Ingredients (
 
 CREATE TABLE Recipes (
 	recipe_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	name TEXT NOT NULL
+	name TEXT NOT NULL,
+	instructions TEXT
 )ENGINE=INNODB;
 
 CREATE TABLE IngredientsInRecipes (
@@ -40,7 +41,7 @@ INSERT INTO Ingredients (name) VALUES 	('chicken'), ('broccoli'), ('pork'), ('pe
 					('macaroni'), ('butter'), ('flour'), ('sugar'), ('salt'), ('bread'), ('eggs'),
 					('tomato sauce'), ('rice'), ('soy sauce');
 
-INSERT INTO Recipes (name) VALUES 	('stir fry'), ('spaghetti with meatballs'), ('pesto pasta'), ('mac and cheese');
+INSERT INTO Recipes (name, instructions) VALUES 	('stir fry', 'Stir and fry stuff</br>Add soy sauce'), ('spaghetti with meatballs', 'Make the spaghetti'), ('pesto pasta', 'Shred basil</br>Mix it all together'), ('mac and cheese', 'mix in cheese please');
 
 INSERT INTO IngredientsInRecipes (recipe_id, ingredient_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 15), (1,17), (1,19), (1, 20);
 INSERT INTO IngredientsInRecipes (recipe_id, ingredient_id) VALUES (2, 6), (2, 8), (2, 15), (2, 18);
@@ -50,7 +51,7 @@ SELECT i.name FROM Ingredients i;
 SELECT r.name FROM Recipes r;
 
 
-SELECT r.name FROM Recipes r WHERE r.name LIKE '%stir%fry%';
+SELECT r.name, r.instructions FROM Recipes r WHERE r.name LIKE '%stir%fry%';
 /* find all ingredients for a single recipe 'stir fry' */
 SELECT r.name, i.name FROM Ingredients i, Recipes r, IngredientsInRecipes ir WHERE r.name = 'stir fry' AND r.recipe_id = ir.recipe_id AND i.ingredient_id = ir.ingredient_id;
 /* find all recipes with a single ingredient 'salt' */

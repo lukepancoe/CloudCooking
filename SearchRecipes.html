@@ -37,24 +37,15 @@ function load_result_in_page() {
 	</form>
 </div>
 
-<form action="search_recipes.php" method="POST">
+<form action="search_recipes.php" method="POST" onsubmit="load_result_in_page(); return false">
 	<h1 style="text-align: center;">Search Recipes</h1>
 	<div style="text-align: center;">
-		<input type="text" name="search_field" id="search_field" value="Search" />
-		<input value="Search" name="search_submit" type="button" id="search_button" onclick="load_result_in_page()" />
+		<input type="text" name="search_field" id="search_field" placeholder="Search" />
+		<input value="Search" name="search_submit" type="submit" id="search_button" />
 	</div>
 </form>
 
 <div id="results_field"></div>
-
-<div style="text-align: center;">
-	<form method="link" style="display:inline" action="CreateRecipe.html">
-		<input type="submit" value="Create Recipe">
-	</form>
-	<form method="link" style="display:inline;" action="AddIngredient.html">
-		<input type="submit" value="Add Ingredient">
-	</form>
-</div>
 
 </body>
 </html>
