@@ -40,7 +40,8 @@ function load_result_in_page() {
 <form action="search_recipes.php" method="POST" onsubmit="load_result_in_page(); return false">
 	<h1 style="text-align: center;">Search Recipes</h1>
 	<div style="text-align: center;">
-		<input type="text" name="search_field" id="search_field" placeholder="Search" />
+		<input type="text" name="search_field[]" placeholder="Search Recipes" />
+		<input type="text" name="search_field[]" placeholder="Search Ingredients" />
 		<input value="Search" name="search_submit" type="submit" id="search_button" />
 	</div>
 </form>

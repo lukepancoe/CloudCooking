@@ -1,7 +1,33 @@
 <html>
 	<body>
+		<div style="text-align: right;">
+			<form method="link" style="display:inline;" action="SearchRecipes.html">
+				<input type="submit" value="Search Recipes">
+			</form>
+			<form method="link" style="display:inline" action="CreateRecipe.html">
+				<input type="submit" value="Create Recipe">
+			</form>
+			<form method="link" style="display:inline;" action="AddIngredient.html">
+				<input type="submit" value="Add Ingredient">
+			</form>
+		</div>
+	
+		<form action="search_recipes.php" method="POST" onsubmit="load_result_in_page(); return false">
+			<h1 style="text-align: center;">Search Recipes</h1>
+			<div style="text-align: center;">
+				<input type="text" name="search_field[]" placeholder="Search Recipes" />
+				<input type="text" name="search_field[]" placeholder="Search Ingredients" />
+				<input value="Search" name="search_submit" type="submit" id="search_button" />
+			</div>
+		</form>
+
+		<div id="results_field"></div>
+	
 		<?php 
-			$search_value = $_POST['search_field'];
+			$recipe_search_value = ($_POST['search_field'][0]);
+			$ingredients_search_value = ($_POST['search_field'][1]);
+			//echo $recipe_search_value;
+			//echo $ingredients_search_value;
 			// connection params
 			$host = 'localhost';
 			$user = 'gsparks';
@@ -11,13 +37,16 @@
 			mysql_connect($host, $user, $pass);
 			mysql_select_db($db);
 		
-			$safe_search = mysql_real_escape_string($search_value);
+			$recipe_safe_search = mysql_real_escape_string($recipe_search_value);
+			$ingredients_safe_search = mysql_real_escape_string($ingredients_search_value);
 		?>
 		
 		<?php
-			$lower_case_search = strtolower($safe_search);
-			$sql_stmt = 'SELECT r.name FROM Recipes r WHERE LOWER(r.name) LIKE "%' . $lower_case_search . '%"';
-			/* echo $sql_stmt; */
+			$recipe_lower_case_search = strtolower($recipe_safe_search);
+			$ingredients_lower_case_search = strtolower($ingredients_safe_search);
+			
+			$sql_stmt = 'SELECT DISTINCT r.name FROM Recipes r, Ingredients i, IngredientsInRecipes ir WHERE i.ingredient_id = ir.ingredient_id AND r.recipe_id = ir.recipe_id AND LOWER(r.name) LIKE "%' . $recipe_lower_case_search . '%" AND LOWER(i.name) LIKE "%' . $ingredients_lower_case_search . '%"';
+			// echo $sql_stmt;
 			$result = mysql_query($sql_stmt);
 			$num_rows = mysql_num_rows($result);
 		?>
