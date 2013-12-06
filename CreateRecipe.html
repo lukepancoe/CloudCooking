@@ -1,6 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SearchRecipes</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#add_to_recipe_btn").click(function () {
+			//alert('added to recipe');
+			var selectedItem = $("#ingredients_list_select option:selected");
+			$("#current_ingredients_select").append(selectedItem);
+		});
+
+		$("#remove_from_recipe_btn").click(function () {
+			//alert('removed from recipe');
+			var selectedItem = $("#current_ingredients_select option:selected");
+			$("#ingredients_list_select").append(selectedItem);
+		});
+	});
+</script>
 
 </head><body>
 <div style="text-align: right;">
@@ -19,30 +35,32 @@
 	<div style="float:left;">
 		<div style="text-align: center;">
 			<h2>Current Recipe</h2>
-			<input name="recipe_name_field" value="Recipe Name">
+			<input name="recipe_name_field" placeholder="Recipe Name">
 		</div>
-		<select name="current_ingredients_field" id="current_ingredients_field" size="5" style="width:375px">
+		<select name="current_ingredients_select" id="current_ingredients_select" size="5" style="width:375px">
 		</select>
 		<div style="text-align: center;">
 			<form method="link" style="display:inline" action="">
 				<input type="submit" value="Create Recipe">
 			</form>
 			<form method="link" style="display:inline;" action="">
-				<input type="submit" value="Remove from Recipe">
+				<input type="button" value="Remove from Recipe" id="remove_from_recipe_btn">
 			</form>
 		</div>
 	</div>
 	<div style="float:left;">
 		<div style="text-align: center;">
 			<h2>Ingredient List</h2>
-			<input name="recipe_name_field" value="Recipe Name">
+			<input name="recipe_name_field" placeholder="Ingredient Name">
 		</div>
-		<div style="text-align: center;">
-			<textarea cols="50" rows="20" name="current_recipe_area"></textarea>
-		</div>
+		<select name="ingredients_list_select" id="ingredients_list_select" size="5" style="width:375px">
+			<option>DummyText1</option>
+			<option>DummyText2</option>
+			<option>DummyText3</option>
+		</select>
 		<div style="text-align: center;">
 			<form method="link" style="display:inline" action="">
-				<input type="submit" value="Add to Recipe">
+				<input type="button" value="Add to Recipe" id="add_to_recipe_btn">
 			</form>
 			<form method="link" style="display:inline;" action="AddIngredient.html">
 				<input type="submit" value="Add New Ingredient">
