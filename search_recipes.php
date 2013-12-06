@@ -55,7 +55,7 @@
 		<form action="view_recipe.php" method="POST">
 			<div id="alignment" style="display:table; width:100%; text-align:center">
 				<div id="inner_alignment" style="display:table-cell; vertical-align:middle; height:80px;">
-					<select name="result_select" id="result_select" size="<?php echo $num_rows; ?>">
+					<select name="result_select" id="result_select" style="width:375px" size="<?php echo $num_rows; ?>">
 					<?php
 						while($row = mysql_fetch_row($result)) {
 							list($name) = $row;
