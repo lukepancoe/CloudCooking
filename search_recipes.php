@@ -26,8 +26,6 @@
 		<?php 
 			$recipe_search_value = ($_POST['search_field'][0]);
 			$ingredients_search_value = ($_POST['search_field'][1]);
-			//echo $recipe_search_value;
-			//echo $ingredients_search_value;
 			// connection params
 			$host = 'localhost';
 			$user = 'gsparks';

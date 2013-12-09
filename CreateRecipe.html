@@ -17,17 +17,9 @@
 		});
 	});
 	
-	$('#create_recipe_submit').click(function() {
+	/*$('#create_recipe_submit').click(function() {
 		$('#current_ingredients_select option').prop('selected', 'selected');
-	});
-	
-	/*function selectAll() 
-    { 
-        selectBox = document.getElementById("current_ingredients_select");
-        for (var i = 0; i < selectBox.options.length; i++) { 
-             selectBox.options[i].selected = true; 
-        } 
-    }*/
+	});*/
 </script>
 
 </head><body>
@@ -42,35 +34,40 @@
 		<input type="submit" value="Add Ingredient">
 	</form>
 </div>
-<h1 style="text-align: center;">Create Recipe</h1>
+<h1 align="center">Create Recipe</h1>
+<div align="center">
 <form action="create_recipe.php" method="POST">
-<div style="width: 46%; margin: 0 auto;">
-	<div style="float:left;">
-		<div style="text-align: center;">
+	<div align="center">
+		<div align="center">
 			<h2>Current Recipe</h2>
-			<input name="recipe_name_field" id="recipe_name_field" placeholder="Recipe Name">
+			<input type="text" name="recipe_name_field" placeholder="Recipe Name">
 		</div>
-		<select name="current_ingredients_select[]" multiple="yes" id="current_ingredients_select" size="5" style="width:375px">
-		</select>
-		<div style="text-align: center;">
-				<div style="text-align: center;">
-					<input value="Create Recipe" name="create_recipe_submit" type="submit" id="create_recipe_submit" />
-				</div>
+		<div align="center">
+			<select name="current_ingredients_select[]" multiple="yes" id="current_ingredients_select" size="5" style="width:375px">
+			</select>
+			<br/>
+			<textarea rows="4" cols="44" name="instructions_area" id="instructions_area">
+			</textarea>
+		</div>
+		<div align="center">
+			<div style="display:inline;">
+				<input value="Create Recipe" name="create_recipe_submit" type="submit" id="create_recipe_submit" />
+			</div>
 			<form method="link" style="display:inline;" action="">
 				<input type="button" value="Remove from Recipe" id="remove_from_recipe_btn">
 			</form>
 		</div>
 	</div>
 </form>
-	<div style="float:right;">
-		<div style="text-align: center;">
+	<div align="center">
+		<div align="center">
 			<h2>Ingredient List</h2>
-			<input name="recipe_name_field" placeholder="Ingredient Name">
+			<input name="ingredients_list_field" placeholder="Ingredient Name">
 		</div>
 		<select name="ingredients_list_select[]" multiple="multiple" id="ingredients_list_select" size="5" style="width:375px">
-			<option>DummyText1</option>
-			<option>DummyText2</option>
-			<option>DummyText3</option>
+			<option>chicken</option>
+			<option>pork</option>
+			<option>salt</option>
 		</select>
 		<div style="text-align: center;">
 			<form method="link" style="display:inline" action="">

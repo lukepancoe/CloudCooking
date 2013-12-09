@@ -1,11 +1,20 @@
+<html>
+	<body>
+		<div style="text-align: right;">
+			<form method="link" style="display:inline;" action="SearchRecipes.html">
+				<input type="submit" value="Search Recipes">
+			</form>
+			<form method="link" style="display:inline" action="CreateRecipe.html">
+				<input type="submit" value="Create Recipe">
+			</form>
+			<form method="link" style="display:inline;" action="AddIngredient.html">
+				<input type="submit" value="Add Ingredient">
+			</form>
+		</div>
 		<?php 
 			$recipe_ingredients_list = $_POST['current_ingredients_select'];
-			foreach ($recipe_ingredients_list as $item) {
-				print $item;
-			}
-			/*$recipe_ingredients_list = $_POST['current_ingredients_select'];
-			print('test print<br/>');
-			print_r('Recipe List: ' . $recipe_ingredients_list);
+			$recipe_name = $_POST['recipe_name_field'];
+			$instructions = $_POST['instructions_area'];
 			
 			// connection params
 			$host = 'localhost';
@@ -15,36 +24,58 @@
 			// connect to db
 			mysql_connect($host, $user, $pass);
 			mysql_select_db($db);
-		
-			$recipe_safe_ingredients = mysql_real_escape_string($recipe_ingredients_list);*/
+			
+			$safe_name = mysql_real_escape_string($recipe_name);
+			$safe_instructions = mysql_real_escape_string($instructions);
 		?>
 		
-		<?php/*
-			$recipe_lower_case_search = strtolower($recipe_safe_search);
-			$ingredients_lower_case_search = strtolower($ingredients_safe_search);
+		<?php
+			$lower_case_name = strtolower($safe_name);
+			$lower_case_instructions = strtolower($safe_instructions);
 			
-			$sql_stmt = 'SELECT DISTINCT r.name FROM Recipes r, Ingredients i, IngredientsInRecipes ir WHERE i.ingredient_id = ir.ingredient_id AND r.recipe_id = ir.recipe_id AND LOWER(r.name) LIKE "%' . $recipe_lower_case_search . '%" AND LOWER(i.name) LIKE "%' . $ingredients_lower_case_search . '%"';
-			// echo $sql_stmt;
+			$sql_stmt = 'INSERT INTO Recipes (name, instructions) VALUES ("' . $lower_case_name . '", "' . $lower_case_instructions . '")';
 			$result = mysql_query($sql_stmt);
-			$num_rows = mysql_num_rows($result);
-		*/?>
+
+			foreach ($recipe_ingredients_list as $item) {
+				$ingredient = $item;
+				$sql_stmt = 'INSERT INTO IngredientsInRecipes (recipe_id, ingredient_id) SELECT r.recipe_id, i.ingredient_id FROM Recipes r, Ingredients i WHERE r.name="' . $lower_case_name . '" AND i.name="' . $ingredient . '"';
+				$result = mysql_query($sql_stmt);
+				print '<br/>';
+			}			
+		?>
+		
+		<?php
+			$lower_case_search = $lower_case_name;
+			$sql_stmt = 'SELECT i.name FROM Ingredients i, Recipes r, IngredientsInRecipes ir WHERE r.name = "' . $lower_case_search . '" AND r.recipe_id = ir.recipe_id AND i.ingredient_id = ir.ingredient_id';
+			$ingredients_list = mysql_query($sql_stmt);
+			$num_rows = mysql_num_rows($ingredients_list);
+			
+			$sql_stmt = 'SELECT r.instructions FROM Recipes r WHERE r.name = "' . $lower_case_search . '"';
+			$instructions = mysql_query($sql_stmt);
+		?>
 		
 		<!-- These divs center the resulting select display on the page -->
-	<!--	<form action="view_recipe.php" method="POST">
-			<div id="alignment" style="display:table; width:100%; text-align:center">
-				<div id="inner_alignment" style="display:table-cell; vertical-align:middle; height:80px;">
-					<select name="result_select" id="result_select" style="width:375px" size="<?php echo $num_rows; ?>">
-					<?php
-						while($row = mysql_fetch_row($result)) {
-							list($name) = $row;
-							echo '<option>' . $name . '</option>';
-						}
-						mysql_close();
-					?>
-					</select>
-				</div>
+		<h1 style="text-align: center;"><?php echo $recipe_name ?></h1>
+		<div id="alignment" style="display:table; width:500px; margin: 0 auto; text-align:left">
+			<div id="inner_alignment" style="display:table-cell; vertical-align:middle; height:80px;">
+				<h3>Ingredients</h3>
+				<?php
+					while($row = mysql_fetch_row($ingredients_list)) {
+						list($name) = $row;
+						echo '<p>' . $name . '</p>';
+					}
+				?>
 			</div>
-			<div style="text-align: center;">
-				<input value="Show Recipe" name="show_recipe" type="submit" id="show_recipe" style="text-align: center; width=50px; position: absolute;" />
+			<div style="float:right;">
+				<h3>Instructions</h3>
+				<?php
+					while($row = mysql_fetch_row($instructions)) {
+						list($instructions) = $row;
+						echo '<p>' . $instructions . '</p>';
+					}
+					mysql_close();
+				?>
 			</div>
-		</form> -->
+		</div>
+	</body>
+</html>

@@ -1,5 +1,16 @@
 <html>
 	<body>
+		<div style="text-align: right;">
+			<form method="link" style="display:inline;" action="SearchRecipes.html">
+				<input type="submit" value="Search Recipes">
+			</form>
+			<form method="link" style="display:inline" action="CreateRecipe.html">
+				<input type="submit" value="Create Recipe">
+			</form>
+			<form method="link" style="display:inline;" action="AddIngredient.html">
+				<input type="submit" value="Add Ingredient">
+			</form>
+		</div>
 		<?php 
 			$search_value = $_POST['result_select'];
 			// connection params
