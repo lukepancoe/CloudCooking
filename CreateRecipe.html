@@ -16,6 +16,18 @@
 			$("#ingredients_list_select").append(selectedItem);
 		});
 	});
+	
+	$('#create_recipe_submit').click(function() {
+		$('#current_ingredients_select option').prop('selected', 'selected');
+	});
+	
+	/*function selectAll() 
+    { 
+        selectBox = document.getElementById("current_ingredients_select");
+        for (var i = 0; i < selectBox.options.length; i++) { 
+             selectBox.options[i].selected = true; 
+        } 
+    }*/
 </script>
 
 </head><body>
@@ -31,29 +43,31 @@
 	</form>
 </div>
 <h1 style="text-align: center;">Create Recipe</h1>
+<form action="create_recipe.php" method="POST">
 <div style="width: 46%; margin: 0 auto;">
 	<div style="float:left;">
 		<div style="text-align: center;">
 			<h2>Current Recipe</h2>
-			<input name="recipe_name_field" placeholder="Recipe Name">
+			<input name="recipe_name_field" id="recipe_name_field" placeholder="Recipe Name">
 		</div>
-		<select name="current_ingredients_select" id="current_ingredients_select" size="5" style="width:375px">
+		<select name="current_ingredients_select[]" multiple="yes" id="current_ingredients_select" size="5" style="width:375px">
 		</select>
 		<div style="text-align: center;">
-			<form method="link" style="display:inline" action="">
-				<input type="submit" value="Create Recipe">
-			</form>
+				<div style="text-align: center;">
+					<input value="Create Recipe" name="create_recipe_submit" type="submit" id="create_recipe_submit" />
+				</div>
 			<form method="link" style="display:inline;" action="">
 				<input type="button" value="Remove from Recipe" id="remove_from_recipe_btn">
 			</form>
 		</div>
 	</div>
-	<div style="float:left;">
+</form>
+	<div style="float:right;">
 		<div style="text-align: center;">
 			<h2>Ingredient List</h2>
 			<input name="recipe_name_field" placeholder="Ingredient Name">
 		</div>
-		<select name="ingredients_list_select" id="ingredients_list_select" size="5" style="width:375px">
+		<select name="ingredients_list_select[]" multiple="multiple" id="ingredients_list_select" size="5" style="width:375px">
 			<option>DummyText1</option>
 			<option>DummyText2</option>
 			<option>DummyText3</option>
