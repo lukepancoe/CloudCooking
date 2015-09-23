@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SearchRecipes</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+<!-- This javascript is required for loading the PHP results in the page, rather than on a new page. -->  
+<!-- Notice that the DOM object with id "search_button" is of type "button". -->
+<!-- This keeps the default loading from happening, so it won't load a new page. -->
+function load_result_in_page() {
+	var search_value = document.getElementById("search_field").value;
+	$.ajax({
+		type: 'POST',
+		url: 'search_recipes.php',
+		data: 'search_field=' + search_value,
+		success: function(html){
+			if(html){
+				document.getElementById("results_field").innerHTML=html;
+			} else {
+				return;
+			}
+		}
+	}); 
+	return false;
+}
+</script>
+</head>
+<body>
+<div style="text-align: right;">
+	<form method="link" style="display:inline;" action="SearchRecipes.html">
+		<input type="submit" value="Search Recipes">
+	</form>
+	<form method="link" style="display:inline" action="filter_ingredients.php">
+		<input type="submit" value="Create Recipe">
+	</form>
+	<form method="link" style="display:inline;" action="add_ingredient.php">
+		<input type="submit" value="Add Ingredient">
+	</form>
+</div>
+<div align="center">
+	<img src="base_logo.jpg" alt="Cloud Cooking">
+</div>
+<form action="search_recipes.php" method="POST" onsubmit="load_result_in_page(); return false">
+	<h1 style="text-align: center;">Search Recipes</h1>
+	<div style="text-align: center;">
+		<input type="text" name="search_field[]" placeholder="Search Recipes" />
+		<input type="text" name="search_field[]" placeholder="Search Ingredients" />
+		<input value="Search" name="search_submit" type="submit" id="search_button" />
+	</div>
+</form>
+
+<div id="results_field"></div>
+
+</body>
+</html>

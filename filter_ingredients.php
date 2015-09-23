@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>SearchRecipes</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#add_to_recipe_btn").click(function () {
+			//alert('added to recipe');
+			var selectedItem = $("#ingredients_list_select option:selected");
+			$("#current_ingredients_select").append(selectedItem);
+		});
+
+		$("#remove_from_recipe_btn").click(function () {
+			//alert('removed from recipe');
+			var selectedItem = $("#current_ingredients_select option:selected");
+			$("#ingredients_list_select").append(selectedItem);
+		});
+	});
+	
+	/*$('#create_recipe_submit').click(function() {
+		$('#current_ingredients_select option').prop('selected', 'selected');
+	});*/
+</script>
+
+</head><body>
+<div style="text-align: right;">
+	<form method="link" style="display:inline;" action="SearchRecipes.html">
+		<input type="submit" value="Search Recipes">
+	</form>
+	<form method="link" style="display:inline" action="filter_ingredients.php">
+		<input type="submit" value="Create Recipe">
+	</form>
+	<form method="link" style="display:inline;" action="add_ingredient.php">
+		<input type="submit" value="Add Ingredient">
+	</form>
+</div>
+<h1 align="center">Create Recipe</h1>
+<div align="center">
+<form action="create_recipe.php" method="POST">
+        <div align="center">
+                <div align="center">
+                        <h2>Current Recipe</h2>
+                        <input type="text" name="recipe_name_field" placeholder="Recipe Name">
+                </div>
+                <div align="center">
+                        <select name="current_ingredients_select[]" multiple="yes" id="current_ingredients_select" size="5" style="width:375px">
+                        </select>
+                        <br/>
+                        <textarea rows="4" cols="44" name="instructions_area" id="instructions_area">
+                        </textarea>
+                </div>
+                <div align="center">
+                        <div style="display:inline;">
+                                <input value="Create Recipe" name="create_recipe_submit" type="submit" id="create_recipe_submit" />
+                        </div>
+                        <form method="link" style="display:inline;" action="">
+                                <input type="button" value="Remove from Recipe" id="remove_from_recipe_btn">
+                        </form>
+                </div>
+        </div>
+</form>
+
+<form action="filter_ingredients.php" method="POST" onsubmit="load_result_in_page(); return false">
+<h2 style="text-align: center;">Ingredient List</h2>
+		<div style="text-align: center;">
+				<input type="text" name="search_field[]" placeholder="Filter Ingredient" />
+				<input value="Filter" name="filter_submit" type="submit" id="filter_button" />
+		</div>
+</form>
+
+		<div id="results_field"></div>
+	
+		<?php 
+			$ingredients_search_value = ($_POST['search_field'][0]);
+			// echo $ingredients_search_value;
+			// connection params
+			$host = 'localhost';
+			$user = 'gsparks';
+			$pass = 'gsparks1234';
+			$db = 'gsparks';
+			// connect to db
+			mysql_connect($host, $user, $pass);
+			mysql_select_db($db);
+		
+			$ingredients_safe_search = mysql_real_escape_string($ingredients_search_value);
+		?>
+		
+		<?php
+			$ingredients_lower_case_search = strtolower($ingredients_safe_search);
+			
+			$sql_stmt = 'SELECT i.name FROM Ingredients i WHERE LOWER(i.name) LIKE "%' . $ingredients_lower_case_search . '%"';
+			$result = mysql_query($sql_stmt);
+			$num_rows = mysql_num_rows($result);
+		?>
+		
+		<div id="results_field"></div>
+		<select name="ingredients_list_select[]" multiple="multiple" id="ingredients_list_select" size="8" style="width:375px">
+					<?php
+						while($row = mysql_fetch_row($result)) {
+							list($name) = $row;
+							echo '<option>' . $name . '</option>';
+						}
+						mysql_close();
+					?>
+		</select>
+		<div style="text-align: center;">
+			<form method="link" style="display:inline" action="">
+				<input type="button" value="Add to Recipe" id="add_to_recipe_btn">
+			</form>
+			<form method="link" style="display:inline;" action="AddIngredient.html">
+				<input type="submit" value="Add New Ingredient">
+			</form>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
